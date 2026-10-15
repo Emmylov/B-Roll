@@ -14,7 +14,7 @@ function OnboardingFlow() {
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">
-      <div className="mb-8 flex items-end justify-between gap-4">
+      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
           <div className="eyebrow">Setup</div>
           <h1 className="mt-3 text-4xl md:text-5xl font-semibold tracking-tight">Welcome to your workflow.</h1>
@@ -27,7 +27,7 @@ function OnboardingFlow() {
           <div className="text-sm uppercase tracking-[0.18em] opacity-70">Onboarding</div>
           <div className="mt-6 space-y-4">
             {steps.map((step, index) => (
-              <div key={index} className="rounded-2xl border border-[var(--border)] bg-white/5 p-4 flex items-center justify-between gap-4">
+              <div key={step.title} className="rounded-2xl border border-[var(--border)] bg-white/5 p-4 flex items-center justify-between gap-4">
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-full bg-[var(--accent)] text-black font-semibold flex items-center justify-center">{index + 1}</div>
                   <div>
@@ -35,7 +35,7 @@ function OnboardingFlow() {
                     <div className="mt-1 text-sm opacity-75">{step.text}</div>
                   </div>
                 </div>
-                <div className="text-xs uppercase tracking-[0.14em] opacity-80">{step.status}</div>
+                <div className="text-[10px] uppercase tracking-[0.14em] opacity-80">{step.status}</div>
               </div>
             ))}
           </div>
@@ -45,7 +45,7 @@ function OnboardingFlow() {
           <div className="text-sm uppercase tracking-[0.18em] opacity-70">Project snapshot</div>
           <div className="mt-6 space-y-4">
             <div className="rounded-2xl bg-[var(--accent)] text-black p-4">
-              <div className="text-xs uppercase tracking-[0.16em]">Narrative score</div>
+              <div className="text-[10px] uppercase tracking-[0.16em]">Narrative score</div>
               <div className="mt-3 text-4xl font-semibold">94%</div>
             </div>
             <div className="grid grid-cols-2 gap-3 text-sm">
@@ -67,8 +67,7 @@ export default function App() {
 
   useEffect(() => {
     const html = document.documentElement
-    if (theme === 'dark') html.classList.add('dark')
-    else html.classList.remove('dark')
+    html.classList.toggle('dark', theme === 'dark')
     localStorage.setItem('theme', theme)
   }, [theme])
 
@@ -103,7 +102,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="panel p-7 rounded-[30px]">
+            <div id="pipeline" className="panel p-7 rounded-[30px]">
               <div className="eyebrow">Pipeline</div>
               <div className="mt-5 space-y-4">
                 {['Import script', 'Analyze tone & narrative arc', 'Match stock / original footage', 'Generate caption pass', 'Export timeline'].map((item, index) => (
