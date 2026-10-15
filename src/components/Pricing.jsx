@@ -1,46 +1,48 @@
 import React from 'react'
 
-function Card({tier, price, features, highlight}){
+function Card({ tier, price, short, list, highlight }) {
   return (
-    <div className={`rounded-2xl p-6 panel glass`} style={{borderColor:'var(--border)'}}>
-      <div className="flex items-center justify-between">
+    <div className={`plan-card ${highlight ? 'plan-card--featured' : ''}`}>
+      <div className="flex items-center justify-between gap-4">
         <div>
           <div className="text-lg font-semibold">{tier}</div>
-          <div className="text-sm opacity-80">{features.short}</div>
+          <div className="text-sm opacity-70">{short}</div>
         </div>
-        <div className="text-right">
-          <div className="text-2xl font-semibold">${price}/mo</div>
-        </div>
+        {highlight && <span className="badge">Most popular</span>}
       </div>
 
-      <ul className="mt-6 space-y-2 text-sm">
-        {features.list.map((f,i)=> (
-          <li key={i} className="flex items-center gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>{f}</li>
+      <div className="mt-6 text-4xl font-semibold">${price}<span className="text-base opacity-70">/mo</span></div>
+
+      <ul className="mt-6 space-y-3 text-sm">
+        {list.map((item) => (
+          <li key={item} className="flex items-center gap-3">
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <span>{item}</span>
+          </li>
         ))}
       </ul>
 
-      <div className="mt-6">
-        <button className={`w-full py-2 rounded-md ${highlight? 'bg-[var(--accent)] text-white':'panel'}`}>Choose {tier}</button>
-      </div>
+      <button className={`mt-8 w-full py-3 rounded-xl ${highlight ? 'primary-button' : 'secondary-button'}`}>
+        Choose {tier}
+      </button>
     </div>
   )
 }
 
-export default function Pricing(){
+export default function Pricing() {
   const plans = [
-    {tier:'Creator', price:29, features:{short:'For solo creators', list:['Auto B-roll matching','Kinetic captions','Single seat export']}},
-    {tier:'Pro Agency', price:79, features:{short:'For small teams', list:['Multi-seat collaboration','Team templates','Priority support']}, highlight:true},
-    {tier:'Enterprise BYOK', price:199, features:{short:'Self-host & SLA', list:['On-prem connectors','SAML SSO','Dedicated onboarding']}}
+    { tier: 'Creator', price: 29, short: 'For solo storytellers', list: ['AI script analysis', 'Auto B-roll match', 'Kinetic captions'] },
+    { tier: 'Pro Agency', price: 79, short: 'For small teams', list: ['Team workspaces', 'Shared templates', 'Priority support'], highlight: true },
+    { tier: 'Enterprise BYOK', price: 199, short: 'Custom deployment', list: ['Private model keys', 'SSO & compliance', 'Dedicated onboarding'] },
   ]
 
   return (
-    <div id="pricing">
-      <h3 className="text-xl font-semibold">Plans for every workflow</h3>
-      <p className="mt-2 opacity-80 text-sm">Transparent pricing. Upgrade as your pipelines scale.</p>
-
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {plans.map((p, idx)=> (
-          <Card key={idx} {...p} />
+    <div>
+      <div className="eyebrow">Pricing</div>
+      <h3 className="mt-3 text-2xl font-semibold tracking-tight">Built for every production scale.</h3>
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {plans.map((plan) => (
+          <Card key={plan.tier} {...plan} />
         ))}
       </div>
     </div>

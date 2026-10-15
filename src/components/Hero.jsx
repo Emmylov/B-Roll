@@ -1,61 +1,65 @@
 import React from 'react'
 
-function TimelineMock(){
-  // Animated multi-track timeline mock
+function TimelineMock() {
   const tracks = [
-    {color: 'bg-yellow-400', label: 'V1'},
-    {color: 'bg-pink-400', label: 'V2'},
-    {color: 'bg-cyan-400', label: 'Audio'},
+    { color: 'bg-[#f4d699]', glow: 'rgba(244, 214, 153, 0.8)', label: 'Narrative' },
+    { color: 'bg-[#e8b3ff]', glow: 'rgba(232, 179, 255, 0.75)', label: 'B-roll' },
+    { color: 'bg-[#8dd8ff]', glow: 'rgba(141, 216, 255, 0.75)', label: 'Captions' },
   ]
-  return (
-    <div className="w-full space-y-3">
-      <div className="relative h-44 panel rounded-2xl overflow-hidden p-6" style={{borderColor: 'var(--border)'}}>
-        <div className="absolute inset-6">
-          {Array.from({length: 6}).map((_,i)=> (
-            <div key={i} className="absolute left-0 right-0 top-0 bottom-0 pointer-events-none" style={{backgroundImage: 'linear-gradient(transparent, rgba(0,0,0,0.02))'}} />
-          ))}
 
-          <div className="space-y-3">
-            {tracks.map((t, idx)=> (
-              <div key={idx} className="relative">
-                <div className="track panel" style={{background: 'linear-gradient(90deg, rgba(255,255,255,0.03), rgba(0,0,0,0.03))'}}>
-                  <div className={`${t.color} h-full rounded-md`} style={{width: `${30 + idx*10}%`, opacity:0.9}} />
-                </div>
-                <div className="absolute top-0 left-0 h-full">
-                  <div className={`cursor ${t.color}`} style={{animation: `cursor-move ${6 + idx*2}s linear infinite`, opacity:0.95}} />
-                </div>
-              </div>
-            ))}
+  return (
+    <div className="timeline-shell">
+      <div className="timeline-frame panel">
+        <div className="timeline-header">
+          <span className="eyebrow">Timeline preview</span>
+          <div className="dots">
+            <span />
+            <span />
+            <span />
           </div>
         </div>
-      </div>
 
-      <style>{`
-        @keyframes cursor-move{
-          0%{ transform: translateX(-8%)}
-          100%{ transform: translateX(110%)}
-        }
-      `}</style>
+        <div className="timeline-body">
+          {tracks.map((track, index) => (
+            <div key={track.label} className="track-line">
+              <div className="track-label">{track.label}</div>
+              <div className="track-rail">
+                <div className="track-fill" style={{ background: `linear-gradient(90deg, ${track.glow}, rgba(255,255,255,0.05))`, width: `${55 + index * 17}%` }} />
+                <div className="track-cursor" style={{ background: track.glow, animationDelay: `${index * 0.8}s` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
 
-export default function Hero({onAuthOpen}){
+export default function Hero({ onAuthOpen }) {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+    <section className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center pt-8 pb-6">
       <div>
-        <h1 className="hero-title text-5xl lg:text-7xl leading-tight font-bold">The Future of Narrative, Automated.</h1>
-        <p className="mt-6 text-lg max-w-xl opacity-90">AI-driven script analysis and automatic B-roll matching, kinetic captions, and multi-track NLE exports designed for both face-cam and faceless creators. Accelerate storytelling with editorial precision.</p>
+        <div className="eyebrow">AI video operations</div>
+        <h1 className="hero-title mt-5">The Future of Narrative, Automated.</h1>
+        <p className="mt-6 max-w-xl text-lg md:text-xl leading-relaxed opacity-85">
+          Turn raw scripts into polished sequences with AI-assisted B-roll selection, kinetic captions, and multi-track exports for faceless and face-cam creators alike.
+        </p>
 
-        <div className="mt-8 flex items-center gap-4">
-          <button onClick={onAuthOpen} className="px-6 py-3 rounded-md bg-[var(--accent)] text-white">Try B-Roll Flow</button>
-          <a className="px-4 py-3 rounded-md panel" style={{borderColor:'var(--border)'}}>Explore Features</a>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <button onClick={onAuthOpen} className="primary-button">Try B-Roll Flow</button>
+          <a href="#features" className="ghost-button">Explore Features</a>
+        </div>
+
+        <div className="mt-10 flex flex-wrap items-center gap-5 text-sm opacity-80">
+          <span>3,200+ editors</span>
+          <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
+          <span>6.4h saved per project</span>
+          <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
+          <span>4.9/5 testimonials</span>
         </div>
       </div>
 
-      <div>
-        <TimelineMock />
-      </div>
+      <TimelineMock />
     </section>
   )
 }
