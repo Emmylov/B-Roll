@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg: #F5F5F7;
+  --panel: #FFFFFF;
+  --border: #E1E1E1;
+  --accent: #111111;
+}
+
+.dark{
+  --bg: #050505;
+  --panel: #0C0C0C;
+  --border: #161616;
+  --accent: #C9A063;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background-color: var(--bg);
+  transition: background-color 400ms ease, color 400ms ease;
+  font-family: var(--font-ui, ui-sans-serif, system-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth panel transitions */
+.panel {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  transition: background-color 400ms ease, border-color 400ms ease;
+}
+
+/* Hero serif headline */
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Mock timeline visuals */
+.track { height: 44px; border-radius: 8px; }
+.cursor {
+  width: 10px; height: 44px; border-radius: 4px; position: absolute; top:0;
+}
+
+/* Glass effect */
+.glass { background-color: rgba(255,255,255,0.06); backdrop-filter: blur(12px); }
+
